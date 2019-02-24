@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+  api:
+    build: ./api
+    volumes:
+      - ./api:/usr/src/app
+    ports:
+      - 5001:80
+      
+  frontend:
+    container_name: angular-frontend
+    build: .
+    volumes:
+      - '.:/usr/src/app'
+    ports:
+      - '3000:4200'
