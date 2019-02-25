@@ -8,8 +8,6 @@ services:
       - ./api:/usr/src/app
     ports:
       - 5001:80
-    depends_on:
-      - postgres
 
   frontend:
     container_name: angular-frontend
@@ -18,18 +16,3 @@ services:
       - '.:/usr/src/app'
     ports:
       - '3000:4200'
-
-  postgres:
-    # we use the mysql base image, version 5.6.36
-    image: postgres
-    container_name: angulardb
-    # we mount a datavolume to make sure we don't loose data
-    volumes:
-       - db_data:/var/lib/postgres
-    # setting some envvars to create the DB
-    environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=angular
-
-volumes:
-    db_data:
