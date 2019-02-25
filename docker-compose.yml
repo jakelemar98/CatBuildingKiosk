@@ -8,6 +8,8 @@ services:
       - ./api:/usr/src/app
     ports:
       - 5001:80
+    depends_on:
+      - postgres
 
   frontend:
     container_name: angular-frontend
