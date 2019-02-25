@@ -1,12 +1,6 @@
-# CatBuildingKiosk
+# KioskApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
-
-
-## Installing Docker
-
-Make sure to first install docker as the deployment of this application will be greatly simplified when using the preconfigured Dockerfiles and Docker-compose file.
-
 
 ## Development server
 
