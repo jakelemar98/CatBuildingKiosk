@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Resource, Api
+from flask_cors import CORS
 
 #import db model Classes & ClassesSchema
 from models.classes import Classes, ClassesSchema
@@ -12,6 +13,7 @@ import os
 # init flask application
 app = Flask(__name__)
 api = Api(app)
+CORS(app, support_credentials=True)
 
 #set base directory to the current path
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -28,17 +30,6 @@ ma = Marshmallow(app)
 # sets schema for the classes with Marshmallow
 class_schema = ClassesSchema(strict=True)
 classes_schema = ClassesSchema(many=True, strict=True)
-
-class Classes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    class_name = db.Column(db.String(80), unique=True, nullable=False)
-    teacher = db.Column(db.String(120), unique=True, nullable=False)
-    classroom =db.Column(db.String(100), unique=True, nullable=False)
-
-    def __init__(self, class_name, teacher,classroom):
-        self.class_name = class_name
-        self.teacher = teacher
-        self.classroom= classroom
 
 class ClassesSchema(ma.Schema):
     class Meta:
