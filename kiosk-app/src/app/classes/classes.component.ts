@@ -8,20 +8,13 @@ import { DataService } from '../data.service';
 })
 export class ClassesComponent implements OnInit {
 
-  users: Object;
   classes: Object;
 
   constructor(private data: DataService) { }
 
   ngOnInit() {
-    this.data.getUsers().subscribe(data => {
-        this.users = data
-        console.log(this.users);
-      }
-    );
     this.data.getClasses().subscribe(data => {
       this.classes = data
-      console.log(this.classes);
     });
   }
 

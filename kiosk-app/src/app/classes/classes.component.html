@@ -6,3 +6,9 @@
     <p>{{ user.first_name }} {{ user.last_name }}</p>
   </li>
 </ul>
+<h1>Classes</h1>
+<ul *ngIf="classes">
+  <li *ngFor="let class of classes">
+    <p>{{ class.class_name }}</p>
+  </li>
+</ul>
