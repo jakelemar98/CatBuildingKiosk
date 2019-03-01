@@ -10,5 +10,18 @@ export class DataService {
   getClasses() {
     return this.http.get('http://localhost:5001/classes')
   }
-  
+
+  getUser(data){
+    console.log(data)
+    this.http.post("http://127.0.0.1:5001/users",data)
+    .subscribe(
+    data  => {
+      console.log("POST Request is successful ", data);
+    },
+    error  => {
+      console.log("Error", error);
+    }
+
+    );
+  }
 }

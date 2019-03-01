@@ -1,0 +1,52 @@
+<div class=" py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+
+                    <!-- form card login -->
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                            <h3 class="mb-0">Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form" >
+                              <h5 *ngIf="success">Your Form is Valid!</h5>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" formControlName="username" class="form-control form-control-lg rounded-0">
+                                    <div *ngIf="submitted && loginForm.controls.username.error" class="error">
+                                      <div *ngIf="loginForm.controls.username.errors.required" class="error">
+                                        username is required
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" formControlName="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
+                                    <div *ngIf="submitted && loginForm.controls.password.error" class="error">
+                                      <div *ngIf="loginForm.controls.password.errors.required" class="error">
+                                        password is required
+                                      </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+
+                            </form>
+                        </div>
+                        <!--/card-block-->
+                    </div>
+                    <!-- /form card login -->
+
+                </div>
+
+
+            </div>
+            <!--/row-->
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->
