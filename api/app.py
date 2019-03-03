@@ -1,44 +1,64 @@
 #import all flask modules needed for api
-from flask import Flask, jsonify, request, abort
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from flask_restful import Resource, Api
-from flask_cors import CORS
+from flask import Flask, jsonify, request, abort, make_response
 from flask_bcrypt import Bcrypt
-
-
-# other imports
-from passlib.apps import custom_app_context as pwd_context
-
+from flask_restful import Api, Resource
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from flask_marshmallow import Marshmallow
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt
 #import db model Classes & ClassesSchema
 from models.classes import Classes, ClassesSchema
 from models.users import User, UsersSchema
 
-# OS modules for python
 import os
-
 # init flask application
 app = Flask(__name__)
 api = Api(app)
 bcrypt = Bcrypt(app)
-CORS(app, support_credentials=True)
-
+CORS(app, resources={r"*": {"origins": "*"}})
 #set base directory to the current path
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 # Database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+dbUri = 'sqlite:///' + os.path.join(basedir, 'db.sqlite')
+engine = create_engine(dbUri)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = dbUri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JWT_SECRET_KEY'] = 'kiosk-app'
 
 # Init db
 db = SQLAlchemy(app)
 # Init ma
 ma = Marshmallow(app)
+# Init JWT
+jwt = JWTManager(app)
+
+
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(32), index = True)
+    password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean())
+
+    def __init__(self, username, password_hash, admin):
+        self.username = username
+        self.password_hash = password_hash
+        self.admin = admin
+
+class UsersSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'username', 'password_hash', 'admin')
+
+
+
+
 
 # sets schema for the classes with Marshmallow
 class_schema = ClassesSchema(strict=True)
 classes_schema = ClassesSchema(many=True, strict=True)
-
 
 # class end-point that allows you to perform get request for classes
 class Class_Api(Resource):
@@ -48,12 +68,14 @@ class Class_Api(Resource):
         result = classes_schema.dump(all_classes)
         return jsonify(result.data)
 
+
 # manipulate class endpoint that allows for a get post or update request
 class manipulate_class(Resource):
     # get by id
     def get(self, id):
         requested_class = Classes.query.get(id)
         return class_schema.jsonify(requested_class)
+
 
     # create new class
     def post(self):
@@ -67,6 +89,7 @@ class manipulate_class(Resource):
         db.session.commit()
 
         return class_schema.jsonify(new_class)
+
 
     # update by ID
     def put(self, id):
@@ -92,6 +115,25 @@ class manipulate_class(Resource):
 
         return class_schema.jsonify(requested_class)
 
+
+class Classes(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    class_name = db.Column(db.String(80), unique=True, nullable=False)
+    teacher = db.Column(db.String(120), unique=True, nullable=False)
+    classroom =db.Column(db.String(100), unique=True, nullable=False)
+
+    def __init__(self, class_name, teacher,classroom):
+        self.class_name = class_name
+        self.teacher = teacher
+        self.classroom= classroom
+
+class ClassesSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'class_name', 'teacher', 'classroom')
+
+
+
+
 # sets schema for the classes with Marshmallow
 user_schema = UsersSchema(strict=True)
 users_schema = UsersSchema(many=True, strict=True)
@@ -107,34 +149,48 @@ class User_Api(Resource):
         username = request.json['username']
         password = request.json['password']
         user = User.query.filter_by(username = username).first()
-        user = user_schema.jsonify(user)
+        #user = user_schema.jsonify(user)
         if user is None:
             abort(401) # no user
 
-        userPass = user.json['password_hash']
+        userPass = user.password_hash
         if not bcrypt.check_password_hash(userPass, password):
             abort(401)
 
+        #user = user_schema.jsonify(user)
 
-        return user.json['id']
+        return make_response(user_schema.jsonify(user), 201)
 
 
 class manipulate_user(Resource):
     def post(self):
         username = request.json['username']
         password = request.json['password']
-
+        admin = False
         if username is None or password is None:
             abort(400) # missing arguments
         if User.query.filter_by(username = username).first() is not None:
             abort(400) # existing user
 
         password_hash = bcrypt.generate_password_hash(password)
-        new_user = User(username, password_hash)
+        new_user = User(username, password_hash, admin)
 
         db.session.add(new_user)
         db.session.commit()
-        return user_schema.jsonify(new_user)
+
+        access_token = create_access_token(identity = username)
+        refresh_token = create_refresh_token(identity = username)
+
+        return {
+                'message': 'User {} was created'.format(username),
+                'access_token': access_token,
+                'refresh_token': refresh_token
+                }
+
+
+class verify_user(Resource):
+    def get(self):
+        user_id = request.json['id']
 
 
 # routing method for RESTful Flask

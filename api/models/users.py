@@ -12,11 +12,13 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(32), index = True)
     password_hash = db.Column(db.String(128))
+    is_admin = db.Column(db.Boolean())
 
-    def __init__(self, username, password_hash):
+    def __init__(self, username, password_hash, admin):
         self.username = username
         self.password_hash = password_hash
+        self.admin = admin 
 
 class UsersSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'username', 'password_hash')
+        fields = ('id', 'username', 'password_hash', 'admin')

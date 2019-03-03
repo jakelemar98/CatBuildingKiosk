@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { User } from './user';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Access-Control-Allow-Origin':'*',
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -11,17 +18,11 @@ export class DataService {
     return this.http.get('http://localhost:5001/classes')
   }
 
-  getUser(data){
-    console.log(data)
-    this.http.post("http://127.0.0.1:5001/users",data)
-    .subscribe(
-    data  => {
-      console.log("POST Request is successful ", data);
-    },
-    error  => {
-      console.log("Error", error);
-    }
+  getUser(data): Observable<User[]>{
+    return this.http.post<User[]>("http://127.0.0.1:5001/users",data)
+  }
 
-    );
+  checkUser(data): Observable<User[]>{
+    return this.http.post<User[]>("http://127.0.0.1:5001/users/verify",data)
   }
 }
