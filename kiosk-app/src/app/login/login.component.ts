@@ -33,10 +33,6 @@ export class LoginComponent implements OnInit {
       this.user = user;
       console.log(this.user['id'])
       if(this.user && this.user['id'] > 0){
-        this.data.checkUser(this.user['id']).subscribe( data => {
-          this.user = data
-          console.log(this.user['id'])
-        });
         this.router.navigate(['/admin', this.user['id']]);
       }
     });

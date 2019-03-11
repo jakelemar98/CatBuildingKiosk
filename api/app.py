@@ -34,28 +34,6 @@ ma = Marshmallow(app)
 # Init JWT
 jwt = JWTManager(app)
 
-
-
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key = True)
-    username = db.Column(db.String(32), index = True)
-    password_hash = db.Column(db.String(128))
-    is_admin = db.Column(db.Boolean())
-
-    def __init__(self, username, password_hash, admin):
-        self.username = username
-        self.password_hash = password_hash
-        self.admin = admin
-
-class UsersSchema(ma.Schema):
-    class Meta:
-        fields = ('id', 'username', 'password_hash', 'admin')
-
-
-
-
-
 # sets schema for the classes with Marshmallow
 class_schema = ClassesSchema(strict=True)
 classes_schema = ClassesSchema(many=True, strict=True)
@@ -139,7 +117,7 @@ user_schema = UsersSchema(strict=True)
 users_schema = UsersSchema(many=True, strict=True)
 
 class User_Api(Resource):
-    # get all classes
+    # get all users
     def get(self):
         all_users = User.query.all()
         result = users_schema.dump(all_users)
@@ -151,13 +129,11 @@ class User_Api(Resource):
         user = User.query.filter_by(username = username).first()
         #user = user_schema.jsonify(user)
         if user is None:
-            abort(401) # no user
+            return("WTF") # no user
 
         userPass = user.password_hash
         if not bcrypt.check_password_hash(userPass, password):
             abort(401)
-
-        #user = user_schema.jsonify(user)
 
         return make_response(user_schema.jsonify(user), 201)
 

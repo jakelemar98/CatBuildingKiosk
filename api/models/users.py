@@ -17,8 +17,8 @@ class User(db.Model):
     def __init__(self, username, password_hash, admin):
         self.username = username
         self.password_hash = password_hash
-        self.admin = admin 
+        self.is_admin = admin
 
 class UsersSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'username', 'password_hash', 'admin')
+        fields = ('id', 'username', 'password_hash', 'is_admin')
