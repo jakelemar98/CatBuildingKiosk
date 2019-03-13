@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
 
   id: string;
+  token: string;
   user: Object;
   loggedIn: boolean;
 
@@ -18,7 +19,9 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
-    if(this.id){
+    this.token = this.route.snapshot.paramMap.get('token');
+
+    if(this.id && this.token == 'activeToken'){
       console.log("user verified")
     } else{
       this.router.navigate(['/']);

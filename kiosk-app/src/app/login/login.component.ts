@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.user = user;
       console.log(this.user['id'])
       if(this.user && this.user['id'] > 0){
-        this.router.navigate(['/admin', this.user['id']]);
+        this.router.navigate(['/admin', this.user['id'], 'activeToken']);
       }
     });
   }
