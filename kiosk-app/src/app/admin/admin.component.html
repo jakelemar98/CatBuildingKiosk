@@ -5,17 +5,10 @@
         Class Panel admin
       </mat-panel-title>
       <mat-panel-description>
-        Type your name and age
+        Select Your Action for Classes
       </mat-panel-description>
     </mat-expansion-panel-header>
-
-    <mat-form-field>
-      <input matInput placeholder="Age">
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput placeholder="Age">
-    </mat-form-field>
+      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openDialog()" name="button">Add Class</button>
   </mat-expansion-panel>
   <mat-expansion-panel (opened)="panelOpenState = true"
                        (closed)="panelOpenState = false">

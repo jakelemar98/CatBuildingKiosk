@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User } from './user';
+import { Classes } from './class';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,5 +25,9 @@ export class DataService {
 
   checkUser(data): Observable<User[]>{
     return this.http.post<User[]>("http://127.0.0.1:5001/users/verify",data)
+  }
+
+  addClass(data): Observable<classes[]>{
+    return this.http.post<Classes[]>("http://127.0.0.1:5001/class",data)
   }
 }

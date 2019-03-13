@@ -11,8 +11,11 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule} from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AddClassComponentComponent } from './add-class-component/add-class-component.component';
+import { AddClassComponent } from './add-class/add-class.component';
+
 
 
 
@@ -24,7 +27,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ClassesComponent,
     HomeComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    AddClassComponentComponent,
+    AddClassComponent
   ],
   imports: [
     BrowserModule,
@@ -36,9 +41,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatCheckboxModule,
     MatExpansionModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [AddClassComponent]
+
 })
 export class AppModule { }
