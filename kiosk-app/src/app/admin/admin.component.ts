@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
-import {MatDialog, MatDialogConfig} from "@angular/material";
-import {AddClassComponent} from "../add-class/add-class.component";
+import { MatDialog, MatDialogConfig } from "@angular/material";
+import { AddClassComponent } from "../add-class/add-class.component";
+import { ClassTableComponent } from "../class-table/class-table.component";
 
 @Component({
   selector: 'app-admin',
@@ -17,14 +18,24 @@ export class AdminComponent implements OnInit {
   user: Object;
   loggedIn: boolean;
 
-  fileNameDialogRef: MatDialogRef<AddClassComponent>;
+  addClassDialogRef: MatDialogRef<AddClassComponent>;
+  classTableDialogRef: MatDialogRef<ClassTableComponent>;
 
 
   constructor(private route: ActivatedRoute, private data: DataService, private router: Router, private dialog: MatDialog) { }
 
-  openDialog() {
-    this.fileNameDialogRef = this.dialog.open(AddClassComponent);
+  openAddDialog() {
+    this.addClassDialogRef = this.dialog.open(AddClassComponent);
   }
+
+  openEditTable() {
+    this.classTableDialogRef = this.dialog.open(ClassTableComponent,  {
+      height: '400px',
+      width: '600px',
+    });
+  }
+
+
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');

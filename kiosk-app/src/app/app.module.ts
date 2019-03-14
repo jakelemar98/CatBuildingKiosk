@@ -13,8 +13,10 @@ import { AdminComponent } from './admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule} from '@angular/material';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { AddClassComponentComponent } from './add-class-component/add-class-component.component';
 import { AddClassComponent } from './add-class/add-class.component';
+import { ClassTableComponent } from './class-table/class-table.component';
+import { MatTableModule } from '@angular/material';
+import { EditClassComponent } from './edit-class/edit-class.component'
 
 
 
@@ -28,8 +30,9 @@ import { AddClassComponent } from './add-class/add-class.component';
     HomeComponent,
     LoginComponent,
     AdminComponent,
-    AddClassComponentComponent,
-    AddClassComponent
+    AddClassComponent,
+    ClassTableComponent,
+    EditClassComponent
   ],
   imports: [
     BrowserModule,
@@ -42,11 +45,12 @@ import { AddClassComponent } from './add-class/add-class.component';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [AddClassComponent]
+  entryComponents: [AddClassComponent, ClassTableComponent, EditClassComponent]
 
 })
 export class AppModule { }

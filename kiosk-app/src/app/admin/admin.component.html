@@ -8,7 +8,9 @@
         Select Your Action for Classes
       </mat-panel-description>
     </mat-expansion-panel-header>
-      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openDialog()" name="button">Add Class</button>
+      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openAddDialog()" name="button">Add Class</button>
+      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openEditTable()" name="button">Edit Class</button>
+
   </mat-expansion-panel>
   <mat-expansion-panel (opened)="panelOpenState = true"
                        (closed)="panelOpenState = false">
