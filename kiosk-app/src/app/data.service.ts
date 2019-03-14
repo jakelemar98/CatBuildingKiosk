@@ -30,4 +30,12 @@ export class DataService {
   addClass(data): Observable<classes[]>{
     return this.http.post<Classes[]>("http://127.0.0.1:5001/class",data)
   }
+
+  updateClass(data, id): Observable<classes[]>{
+    return this.http.put<Classes[]>("http://127.0.0.1:5001/class/"+id,data)
+  }
+
+  deleteClass(id): Observable<classes[]>{
+    return this.http.delete<Classes[]>("http://127.0.0.1:5001/class/"+id)
+  }
 }

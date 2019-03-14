@@ -33,7 +33,7 @@ export class AddClassComponent implements OnInit {
     this.data.addClass(this.addClassForm.value).subscribe( addedClass => {
       this.class = addedClass
       if(this.class){
-        console.log("class added")
+        window.location.reload()
       }
     });
   }

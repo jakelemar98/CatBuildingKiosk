@@ -65,6 +65,9 @@ class manipulate_class(Resource):
 
         db.session.add(new_class)
         db.session.commit()
+        
+        db.session.expunge_all()
+        db.session.close()
 
         return class_schema.jsonify(new_class)
 
@@ -82,14 +85,17 @@ class manipulate_class(Resource):
         requested_class.classroom = classroom
 
         db.session.commit()
+        db.session.close()
 
         return class_schema.jsonify(requested_class)
 
     # delete by ID
     def delete(self, id):
         requested_class = Classes.query.get(id)
-        db.session.delete(requested_class)
+        local_object = db.session.merge(requested_class)
+        db.session.delete(local_object)
         db.session.commit()
+        db.session.close()
 
         return class_schema.jsonify(requested_class)
 
@@ -127,13 +133,14 @@ class manipulate_user(Resource):
         if username is None or password is None:
             abort(400) # missing arguments
         if User.query.filter_by(username = username).first() is not None:
-            abort(400) # existing user
+            abort(400) # exithis.dataSource = datasting user
 
         password_hash = bcrypt.generate_password_hash(password)
         new_user = User(username, password_hash, admin)
 
         db.session.add(new_user)
         db.session.commit()
+        db.session.close()
 
         access_token = create_access_token(identity = username)
         refresh_token = create_refresh_token(identity = username)

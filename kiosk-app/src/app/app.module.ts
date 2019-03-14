@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -46,7 +47,8 @@ import { EditClassComponent } from './edit-class/edit-class.component'
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    MatTableModule
+    MatTableModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

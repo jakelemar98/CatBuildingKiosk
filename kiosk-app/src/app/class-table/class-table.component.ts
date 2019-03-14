@@ -33,4 +33,12 @@ export class ClassTableComponent implements OnInit {
       }
     });
   }
+
+  deleteClass(id){
+    this.data.deleteClass(id).subscribe(data => {
+      if(data){
+        window.location.reload()
+      }
+    });
+  }
 }

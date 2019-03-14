@@ -21,6 +21,16 @@
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let row; let i = index" >
          <button mat-raised-button (click)="getClass(i)">Edit</button>
+         |
+         <button mat-raised-button
+          [swal]="{
+                    title: 'Delete Class', text:'Are you sure you want to delete this class?',
+                    type: 'warning', showCancelButton: true, confirmButtonText: 'Yes, delete it!'
+                  }"
+          (confirm)="deleteClass(row.id)"
+          >
+          delete
+        </button>
     </td>
 </ng-container>
 
