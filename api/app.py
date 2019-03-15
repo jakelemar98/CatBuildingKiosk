@@ -10,6 +10,8 @@ from flask_jwt_extended import JWTManager, create_access_token, create_refresh_t
 #import db model Classes & ClassesSchema
 from models.classes import Classes, ClassesSchema
 from models.users import User, UsersSchema
+from models.teachers import Teachers, TeachersSchema
+from models.classrooms import Classrooms, ClassroomsSchema
 
 import os
 # init flask application
@@ -33,6 +35,10 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 # Init JWT
 jwt = JWTManager(app)
+
+
+
+# Classes Resources
 
 # sets schema for the classes with Marshmallow
 class_schema = ClassesSchema(strict=True)
@@ -65,11 +71,10 @@ class manipulate_class(Resource):
 
         db.session.add(new_class)
         db.session.commit()
-        
-        db.session.expunge_all()
-        db.session.close()
 
-        return class_schema.jsonify(new_class)
+        db.session.close()
+        return "success"
+        # return class_schema.jsonify(new_class)
 
 
     # update by ID
@@ -98,6 +103,10 @@ class manipulate_class(Resource):
         db.session.close()
 
         return class_schema.jsonify(requested_class)
+
+
+
+# Users Resources
 
 # sets schema for the classes with Marshmallow
 user_schema = UsersSchema(strict=True)
@@ -131,7 +140,7 @@ class manipulate_user(Resource):
         password = request.json['password']
         admin = False
         if username is None or password is None:
-            abort(400) # missing arguments
+            abort(400) # missing argumentsfirst_name
         if User.query.filter_by(username = username).first() is not None:
             abort(400) # exithis.dataSource = datasting user
 
@@ -152,9 +161,46 @@ class manipulate_user(Resource):
                 }
 
 
-class verify_user(Resource):
+
+# Teachers Resources
+
+# sets schema for the classes with Marshmallow
+teacher_schema = TeachersSchema(strict=True)
+teachers_schema = TeachersSchema(many=True, strict=True)
+
+
+class Teacher_Api(Resource):
     def get(self):
-        user_id = request.json['id']
+        all_teachers = Teachers.query.all()
+        result = teachers_schema.dump(all_teachers)
+        return jsonify(result.data)
+
+
+    def post(self):
+        first_name = request.json['first_name']
+        last_name = request.json['last_name']
+        department = request.json['department']
+
+        if first_name is None or last_name is None or department is None:
+            abort(400)
+
+        new_teacher = Teachers(first_name, last_name, department)
+
+        db.session.add(new_teacher)
+        db.session.commit()
+
+        return make_response(teacher_schema.jsonify(new_teacher), 201)
+
+class manipulate_teacher(Resource):
+    def delete(self, id):
+        requested_teacher = Teachers.query.get(id)
+        local_object = db.session.merge(requested_teacher)
+        db.session.delete(local_object)
+        db.session.commit()
+        db.session.close()
+
+        return teacher_schema.jsonify(requested_teacher)
+
 
 
 # routing method for RESTful Flask
@@ -162,7 +208,8 @@ api.add_resource(Class_Api, '/classes')
 api.add_resource(manipulate_class, '/class','/class/<id>')
 api.add_resource(User_Api, '/users')
 api.add_resource(manipulate_user, '/user/add','/user/<id>')
-
+api.add_resource(Teacher_Api, '/teachers')
+api.add_resource(manipulate_teacher, '/teacher/add','/teacher/<id>')
 
 #start APP Loop
 if __name__ == '__main__':

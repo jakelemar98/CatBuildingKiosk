@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import  { EditClassComponent } from '../edit-class/edit-class.component';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogConfig, MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'app-class-table',
@@ -14,14 +14,13 @@ export class ClassTableComponent implements OnInit {
 
 
   constructor(private data: DataService, private dialog: MatDialog) { }
-
-  data;
+  class_info;
   dataSource;
   displayedColumns: string[] = [ 'class_name', 'teacher', 'classroom', 'action'];
 
   ngOnInit() {
-    this.data.getClasses().subscribe(data => {
-      this.dataSource = data
+    this.data.getClasses().subscribe(returnData => {
+      this.dataSource = returnData
     });
   }
 

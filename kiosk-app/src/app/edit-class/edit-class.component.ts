@@ -10,9 +10,11 @@ import { DataService } from '../data.service';
 })
 export class EditClassComponent implements OnInit {
 
-  addClassForm: FormGroup;
-  data;
-
+  editClassForm: FormGroup;
+  dataFill;
+  class;
+  submitted = false;
+  success = false;
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private FormBuilder: FormBuilder, private DataService: DataService) {
     this.editClassForm = this.FormBuilder.group({
       class_name: ['', Validators.required],
@@ -22,11 +24,11 @@ export class EditClassComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data = this.data.dataKey
+    this.dataFill = this.data.dataKey
     this.editClassForm.setValue({
-      class_name: this.data.class_name,
-      teacher: this.data.teacher,
-      classroom: this.data.classroom
+      class_name: this.dataFill.class_name,
+      teacher: this.dataFill.teacher,
+      classroom: this.dataFill.classroom
     });
   }
 
@@ -37,8 +39,7 @@ export class EditClassComponent implements OnInit {
       return;
     }
     this.success = true;
-    console.log(this.data.id)
-    this.DataService.updateClass(this.editClassForm.value, this.data.id).subscribe( addedClass => {
+    this.DataService.updateClass(this.editClassForm.value, this.dataFill.id).subscribe( addedClass => {
       this.class = addedClass
       if(this.class){
         window.location.reload()

@@ -8,19 +8,19 @@
         Select Your Action for Classes
       </mat-panel-description>
     </mat-expansion-panel-header>
-      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openAddDialog()" name="button">Add Class</button>
-      <button type="button" mat-raised-button class="btn btn-lg btn-warning" (click)="openEditTable()" name="button">Edit Class</button>
+      <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openAddDialog('class')" name="button">Add Class</button>
+      <button type="button" mat-raised-button class="btn btn-lg btn-warning" (click)="openEditTable('class')" name="button">Edit Class</button>
   </mat-expansion-panel>
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
+  <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Self aware panel
+        Teacher Panel Admin
       </mat-panel-title>
       <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        Select Your Action for Teachers
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>I'm visible because I am open</p>
+    <button type="button" mat-raised-button class="btn btn-lg btn-primary" (click)="openAddDialog('teacher')" name="button">Add Teacher</button>
+    <button type="button" mat-raised-button class="btn btn-lg btn-warning" (click)="openEditTable('teacher')" name="button">Edit Teacher</button>
   </mat-expansion-panel>
 </mat-accordion>

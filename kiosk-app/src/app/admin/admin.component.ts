@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from "@angular/material";
+import { MatDialog, MatDialogRef, MatDialogConfig } from "@angular/material";
 import { AddClassComponent } from "../add-class/add-class.component";
 import { ClassTableComponent } from "../class-table/class-table.component";
+import { AddTeacherComponent } from "../add-teacher/add-teacher.component";
+import { TeacherTableComponent } from "../teacher-table/teacher-table.component";
 
 @Component({
   selector: 'app-admin',
@@ -19,20 +21,36 @@ export class AdminComponent implements OnInit {
   loggedIn: boolean;
 
   addClassDialogRef: MatDialogRef<AddClassComponent>;
+  addTeacherDialogRef: MatDialogRef<AddTeacherComponent>;
+
   classTableDialogRef: MatDialogRef<ClassTableComponent>;
+  teacherTableDialogRef: MatDialogRef<TeacherTableComponent>;
+
 
 
   constructor(private route: ActivatedRoute, private data: DataService, private router: Router, private dialog: MatDialog) { }
 
-  openAddDialog() {
-    this.addClassDialogRef = this.dialog.open(AddClassComponent);
+  openAddDialog(type) {
+    if(type == "class"){
+      this.addClassDialogRef = this.dialog.open(AddClassComponent);
+    } else{
+      this.addTeacherDialogRef = this.dialog.open(AddTeacherComponent);
+    }
   }
 
-  openEditTable() {
-    this.classTableDialogRef = this.dialog.open(ClassTableComponent,  {
-      height: '400px',
-      width: '600px',
-    });
+  openEditTable(type) {
+    if(type == "class"){
+      this.classTableDialogRef = this.dialog.open(ClassTableComponent,  {
+        height: '400px',
+        width: '600px',
+      });
+    } else{
+      this.teacherTableDialogRef = this.dialog.open(TeacherTableComponent,  {
+        height: '400px',
+        width: '600px',
+      });
+    }
+
   }
 
 
