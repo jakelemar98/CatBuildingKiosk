@@ -37,3 +37,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 cd into kiosk app
 
 ng add @angular/material
+
+## Install SweetAlert
+
+npm install --save sweetalert2@^7.15.1 @toverux/ngx-sweetalert2
+
