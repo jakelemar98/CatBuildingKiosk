@@ -3,6 +3,11 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 
+export interface teacher {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-edit-class',
   templateUrl: './edit-class.component.html',
@@ -15,6 +20,8 @@ export class EditClassComponent implements OnInit {
   class;
   submitted = false;
   success = false;
+  teachers: teacher[] = [];
+
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private FormBuilder: FormBuilder, private DataService: DataService) {
     this.editClassForm = this.FormBuilder.group({
       class_name: ['', Validators.required],
@@ -30,6 +37,13 @@ export class EditClassComponent implements OnInit {
       teacher: this.dataFill.teacher,
       classroom: this.dataFill.classroom
     });
+    this.DataService.getTeachers().subscribe( returnedTeachers => {
+      for(let teach of returnedTeachers){
+        var row = {value: teach.id, viewValue: teach.first_name + " " + teach.last_name}
+        this.teachers.push(row)
+      };
+    });
+    console.log(this.teachers)
   }
 
   onSubmit(){

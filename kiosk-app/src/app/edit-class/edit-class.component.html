@@ -8,7 +8,11 @@
 
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput formControlName="teacher" placeholder="Enter Teacher Name">
+      <mat-select formControlName="teacher" placeholder="Select Teacher">
+        <mat-option *ngFor="let teacher of teachers" [value]="teacher.viewValue">
+          {{teacher.viewValue}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </mat-dialog-content>
 

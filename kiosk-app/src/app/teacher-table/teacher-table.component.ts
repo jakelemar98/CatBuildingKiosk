@@ -19,7 +19,6 @@ export class TeacherTableComponent implements OnInit {
   ngOnInit() {
     this.data.getTeachers().subscribe(returnData => {
       this.dataSource = returnData
-      console.log(this.dataSource)
     });
   }
 

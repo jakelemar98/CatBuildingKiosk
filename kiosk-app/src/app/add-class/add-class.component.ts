@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 
+export interface teacher {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-add-class',
   templateUrl: './add-class.component.html',
@@ -13,6 +18,8 @@ export class AddClassComponent implements OnInit {
   submitted = false;
   success = false;
   class = Object;
+  teachers: teacher[] = [];
+
 
   constructor(private FormBuilder: FormBuilder, private data: DataService) {
     this.addClassForm = this.FormBuilder.group({
@@ -21,7 +28,6 @@ export class AddClassComponent implements OnInit {
       classroom: ['', Validators.required],
     });
   }
-
   onSubmit(){
 
     this.submitted = true;
@@ -39,6 +45,11 @@ export class AddClassComponent implements OnInit {
   }
 
   ngOnInit() {
-
-   }
+    this.data.getTeachers().subscribe( returnedTeachers => {
+      for(let teach of returnedTeachers){
+        var row = {value: teach.id, viewValue: teach.first_name + " " + teach.last_name}
+        this.teachers.push(row)
+      };
+    });
+  }
 }
