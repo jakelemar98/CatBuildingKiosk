@@ -13,7 +13,7 @@ class Classrooms(db.Model):
     building =db.Column(db.String(100), nullable=False)
 
     def __init__(self, classroom_name, floor, building):
-        self.class_name = classroom_name
+        self.classroom_name = classroom_name
         self.floor = floor
         self.building = building
 

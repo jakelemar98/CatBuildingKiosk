@@ -1,14 +1,8 @@
-<h1>Users</h1>
-
-<ul *ngIf="users">
-  <li *ngFor="let user of users.data">
-    <img [src]="user.avatar">
-    <p>{{ user.first_name }} {{ user.last_name }}</p>
-  </li>
-</ul>
 <h1>Classes</h1>
 <ul *ngIf="classes">
   <li *ngFor="let class of classes">
-    <p>{{ class.class_name }}</p>
+    <h2>{{ class.class_name }}</h2>
+    <br>
+    <p>{{ class.classroom }}</p>
   </li>
 </ul>

@@ -7,6 +7,7 @@ import { AddClassComponent } from "../add-class/add-class.component";
 import { ClassTableComponent } from "../class-table/class-table.component";
 import { AddTeacherComponent } from "../add-teacher/add-teacher.component";
 import { TeacherTableComponent } from "../teacher-table/teacher-table.component";
+import { AddClassroomComponent } from "../add-classroom/add-classroom.component";
 
 @Component({
   selector: 'app-admin',
@@ -22,6 +23,7 @@ export class AdminComponent implements OnInit {
 
   addClassDialogRef: MatDialogRef<AddClassComponent>;
   addTeacherDialogRef: MatDialogRef<AddTeacherComponent>;
+  addClassroomDialogRef: MatDialogRef<AddClassroomComponent>;
 
   classTableDialogRef: MatDialogRef<ClassTableComponent>;
   teacherTableDialogRef: MatDialogRef<TeacherTableComponent>;
@@ -33,8 +35,10 @@ export class AdminComponent implements OnInit {
   openAddDialog(type) {
     if(type == "class"){
       this.addClassDialogRef = this.dialog.open(AddClassComponent);
-    } else{
+    } else if(type == "teacher"){
       this.addTeacherDialogRef = this.dialog.open(AddTeacherComponent);
+    } else {
+      this.addClassroomDialogRef = this.dialog.open(AddClassroomComponent);
     }
   }
 

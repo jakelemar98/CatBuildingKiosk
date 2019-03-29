@@ -8,6 +8,14 @@ export interface teacher {
   viewValue: string;
 }
 
+export interface section {
+  value: string;
+}
+
+export interface day {
+  value: string;
+}
+
 @Component({
   selector: 'app-edit-class',
   templateUrl: './edit-class.component.html',
@@ -21,21 +29,50 @@ export class EditClassComponent implements OnInit {
   submitted = false;
   success = false;
   teachers: teacher[] = [];
+  sections: section[] = [
+                {value: 'CIS'},
+                {value: 'CSC'},
+            ];
+days: day[] = [
+      {value: 'M'},
+      {value: 'T'},
+      {value: 'W'},
+      {value: 'TH'},
+      {value: 'F'},
+      {value: 'MW'},
+      {value: 'MWF'},
+      {value: 'TR'},
+      ]
 
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private FormBuilder: FormBuilder, private DataService: DataService) {
     this.editClassForm = this.FormBuilder.group({
+      class_id: ['', Validators.required],
       class_name: ['', Validators.required],
       teacher: ['', Validators.required],
+      section: ['', Validators.required],
       classroom: ['', Validators.required],
+      days: ['', Validators.required],
+      time: ['', Validators.required],
     });
   }
 
   ngOnInit() {
     this.dataFill = this.data.dataKey
+    var hour = this.dataFill.time.charAt(0)
+    hour = parseInt(hour, 10)
+    
+    if (hour < 10){
+      this.dataFill.time = "0"+this.dataFill.time
+    } 
+    
     this.editClassForm.setValue({
+      class_id: this.dataFill.class_id,
       class_name: this.dataFill.class_name,
       teacher: this.dataFill.teacher,
-      classroom: this.dataFill.classroom
+      section: this.dataFill.section,
+      classroom: this.dataFill.classroom,
+      days: this.dataFill.days,
+      time: this.dataFill.time
     });
     this.DataService.getTeachers().subscribe( returnedTeachers => {
       for(let teach of returnedTeachers){

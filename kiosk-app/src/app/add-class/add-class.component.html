@@ -1,5 +1,12 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="addClassForm">
   <h1 mat-dialog-title>Add Class</h1>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput formControlName="class_id" placeholder="Enter Class Call #">
+    </mat-form-field>
+  </mat-dialog-content>
+
   <mat-dialog-content>
     <mat-form-field>
       <input matInput formControlName="class_name" placeholder="Enter Class Name">
@@ -18,7 +25,33 @@
 
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput formControlName="classroom" placeholder="Enter Classroom">
+      <mat-select formControlName="section" placeholder="Select Section">
+        <mat-option *ngFor="let section of sections" [value]="section.value">
+          {{section.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput formControlName="classroom" placeholder="Select Classroom">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-select formControlName="days" placeholder="Select Days">
+        <mat-option *ngFor="let day of days" [value]="day.value">
+          {{day.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput type="time" formControlName="time" placeholder="Enter Time">
     </mat-form-field>
   </mat-dialog-content>
 

@@ -20,7 +20,9 @@ import { MatTableModule } from '@angular/material';
 import { EditClassComponent } from './edit-class/edit-class.component';
 import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 import { TeacherTableComponent } from './teacher-table/teacher-table.component';
-import { EditTeacherComponent } from './edit-teacher/edit-teacher.component'
+import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
+import { AddClassroomComponent } from './add-classroom/add-classroom.component';
+import { EditClassroomComponent } from './edit-classroom/edit-classroom.component'
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { EditTeacherComponent } from './edit-teacher/edit-teacher.component'
     EditClassComponent,
     AddTeacherComponent,
     TeacherTableComponent,
-    EditTeacherComponent
+    EditTeacherComponent,
+    AddClassroomComponent,
+    EditClassroomComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,10 @@ import { EditTeacherComponent } from './edit-teacher/edit-teacher.component'
                     EditClassComponent,
                     AddTeacherComponent,
                     TeacherTableComponent,
-                    EditTeacherComponent
+                    EditTeacherComponent,
+                    AddClassroomComponent,
+                    AddClassroomComponent,
+                    EditClassroomComponent
                   ]
 
 })

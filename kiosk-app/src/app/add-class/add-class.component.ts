@@ -7,6 +7,14 @@ export interface teacher {
   viewValue: string;
 }
 
+export interface section {
+  value: string;
+}
+
+export interface day {
+  value: string;
+}
+
 @Component({
   selector: 'app-add-class',
   templateUrl: './add-class.component.html',
@@ -19,13 +27,30 @@ export class AddClassComponent implements OnInit {
   success = false;
   class = Object;
   teachers: teacher[] = [];
-
+  sections: section[] = [
+                {value: 'CIS'},
+                {value: 'CSC'},
+            ];
+  days: day[] = [
+          {value: 'M'},
+          {value: 'T'},
+          {value: 'W'},
+          {value: 'TH'},
+          {value: 'F'},
+          {value: 'MW'},
+          {value: 'MWF'},
+          {value: 'TR'},
+        ]
 
   constructor(private FormBuilder: FormBuilder, private data: DataService) {
     this.addClassForm = this.FormBuilder.group({
+      class_id: ['', Validators.required],
       class_name: ['', Validators.required],
       teacher: ['', Validators.required],
+      section: ['', Validators.required],
       classroom: ['', Validators.required],
+      days: ['', Validators.required],
+      time: ['', Validators.required],
     });
   }
   onSubmit(){

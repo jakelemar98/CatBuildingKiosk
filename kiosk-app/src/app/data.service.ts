@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { User } from './user';
 import { Classes } from './class';
 import { Teacher } from './teacher';
+import { Classroom } from './classroom';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Access-Control-Allow-Origin':'*',
@@ -49,5 +51,9 @@ export class DataService {
 
   deleteTeacher(id): Observable<Teacher[]>{
     return this.http.delete<Teacher[]>("http://127.0.0.1:5001/teacher/"+id)
+  }
+
+  addClassroom(data): Observable<Classroom[]>{
+    return this.http.post<Classroom[]>("http://127.0.0.1:5001/classrooms", data)
   }
 }

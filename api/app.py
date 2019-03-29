@@ -36,8 +36,58 @@ ma = Marshmallow(app)
 # Init JWT
 jwt = JWTManager(app)
 
+# class Classes(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     class_id = db.Column(db.String(10), nullable = False)
+#     class_name = db.Column(db.String(80), nullable=False)
+#     teacher = db.Column(db.String(120), nullable=False)
+#     section = db.Column(db.String(10), nullable=False)
+#     classroom = db.Column(db.String(100), nullable=False)
+#     days = db.Column(db.String(10), nullable=False)
+#     time = db.Column(db.String(25), nullable=False)
 
+#     def __init__(self, class_id, class_name, teacher, section, classroom, days, time):
+#         self.class_id = class_id
+#         self.class_name = class_name
+#         self.teacher = teacher
+#         self.section = section
+#         self.classroom = classroom
+#         self.days = days
+#         self.time = time
 
+# class Classrooms(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     classroom_name = db.Column(db.String(80), nullable=False)
+#     floor = db.Column(db.Integer, nullable=False)
+#     building =db.Column(db.String(100), nullable=False)
+
+#     def __init__(self, classroom_name, floor, building):
+#         self.class_name = classroom_name
+#         self.floor = floor
+#         self.building = building
+
+# class Teachers(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     first_name = db.Column(db.String(80), nullable=False)
+#     last_name = db.Column(db.String(120), nullable=False)
+#     department = db.Column(db.String(100), nullable=False)
+
+#     def __init__(self, first_name, last_name, department):
+#         self.first_name = first_name
+#         self.last_name = last_name
+#         self.department = department
+
+# class User(db.Model):
+#     __tablename__ = 'users'
+#     id = db.Column(db.Integer, primary_key = True)
+#     username = db.Column(db.String(32), index = True)
+#     password_hash = db.Column(db.String(128))
+#     is_admin = db.Column(db.Boolean())
+
+#     def __init__(self, username, password_hash, admin):
+#         self.username = username
+#         self.password_hash = password_hash
+#         self.is_admin = admin
 # Classes Resources
 
 # sets schema for the classes with Marshmallow
@@ -63,11 +113,15 @@ class manipulate_class(Resource):
 
     # create new class
     def post(self):
+        class_id = request.json['class_id']
         class_name = request.json['class_name']
         teacher = request.json['teacher']
+        section = request.json['section']
         classroom = request.json['classroom']
+        days = request.json['days']
+        time = request.json['time']
 
-        new_class = Classes(class_name, teacher, classroom)
+        new_class = Classes(class_id, class_name, teacher, section, classroom, days, time)
 
         db.session.add(new_class)
         db.session.commit()
@@ -81,13 +135,21 @@ class manipulate_class(Resource):
     def put(self, id):
         requested_class = Classes.query.get(id)
 
+        class_id = request.json['class_id']
         class_name = request.json['class_name']
         teacher = request.json['teacher']
+        section = request.json['section']
         classroom = request.json['classroom']
+        days = request.json['days']
+        time = request.json['time']
 
+        requested_class.class_id = class_id
         requested_class.class_name = class_name
         requested_class.teacher = teacher
+        requested_class.section = section
         requested_class.classroom = classroom
+        requested_class.days = days
+        requested_class.time = time
 
         db.session.commit()
         db.session.close()
@@ -202,6 +264,31 @@ class manipulate_teacher(Resource):
         return teacher_schema.jsonify(requested_teacher)
 
 
+# sets schema for the classes with Marshmallow
+classroom_schema = ClassroomsSchema(strict=True)
+classrooms_schema = ClassroomsSchema(many=True, strict=True)
+
+
+class Classroom_Api(Resource):
+    def post(self):
+        classroom_name = request.json['classroom_name']
+        floor = request.json['floor']
+        building = request.json['building']
+
+        if classroom_name is None or floor is None or building is None:
+            abort(400)
+
+        new_classroom = Classrooms(classroom_name, floor, building)
+
+        db.session.add(new_classroom)
+        db.session.commit()
+
+        return make_response(classroom_schema.jsonify(new_classroom), 201)
+    
+    def get(self):
+        all_classrooms = Classrooms.query.all()
+        result = classrooms_schema.dump(all_classrooms)
+        return jsonify(result.data)
 
 # routing method for RESTful Flask
 api.add_resource(Class_Api, '/classes')
@@ -210,6 +297,7 @@ api.add_resource(User_Api, '/users')
 api.add_resource(manipulate_user, '/user/add','/user/<id>')
 api.add_resource(Teacher_Api, '/teachers')
 api.add_resource(manipulate_teacher, '/teacher/add','/teacher/<id>')
+api.add_resource(Classroom_Api, '/classrooms')
 
 #start APP Loop
 if __name__ == '__main__':

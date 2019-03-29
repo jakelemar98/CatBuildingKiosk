@@ -15,6 +15,8 @@ export class ClassesComponent implements OnInit {
   ngOnInit() {
     this.data.getClasses().subscribe(data => {
       this.classes = data
+      console.log(this.classes);
+      
     });
   }
 

@@ -21,6 +21,7 @@ export class EditTeacherComponent implements OnInit {
   submitted = false;
   success = false;
   departments: department[] = [];
+  class;
 
   constructor( @Inject(MAT_DIALOG_DATA) public data: any, private FormBuilder: FormBuilder, private DataService: DataService) {
     this.editTeacherForm = this.FormBuilder.group({
@@ -49,11 +50,11 @@ export class EditTeacherComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
 
-    if (this.editClassForm.invalid){
+    if (this.editTeacherForm.invalid){
       return;
     }
     this.success = true;
-    this.DataService.updateClass(this.editClassForm.value, this.dataFill.id).subscribe( addedClass => {
+    this.DataService.updateClass(this.editTeacherForm.value, this.dataFill.id).subscribe( addedClass => {
       this.class = addedClass
       if(this.class){
         window.location.reload()

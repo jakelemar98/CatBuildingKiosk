@@ -34,7 +34,6 @@ export class AddTeacherComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.addTeacherForm.value)
     this.submitted = true;
 
     if (this.addTeacherForm.invalid){
