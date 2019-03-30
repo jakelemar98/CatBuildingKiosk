@@ -1,3 +1,32 @@
-<p>
-  edit-classroom works!
-</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="editClassroomForm">
+  <h1 mat-dialog-title>Add Teacher</h1>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput formControlName="classroom_name" placeholder="Enter Classroom Name">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput formControlName="floor" placeholder="floor">
+    </mat-form-field>
+  </mat-dialog-content>
+
+
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-select formControlName="building" placeholder="Select Building">
+        <mat-option *ngFor="let building of buildings" [value]="building.value">
+          {{building.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-raised-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-raised-button type="submit">Edit Classroom</button>
+  </mat-dialog-actions>
+</form>
+

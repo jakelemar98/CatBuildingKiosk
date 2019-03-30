@@ -67,7 +67,7 @@ export class DataService {
   }
 
   updateClassroom(data, id): Observable<Classroom[]>{
-    return this.http.post<Classroom[]>("http://127.0.0.1:5001/classrooms/"+id, data)
+    return this.http.put<Classroom[]>("http://127.0.0.1:5001/classrooms/"+id, data)
   }
 
   deleteClassroom(id): Observable<Classroom[]>{

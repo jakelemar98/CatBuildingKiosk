@@ -128,7 +128,7 @@ class manipulate_class(Resource):
         try:
             db.session.commit()
         except:
-            return "fuck"
+            db.session.rollback()
         finally:
             db.session.close()
         
@@ -155,8 +155,12 @@ class manipulate_class(Resource):
         requested_class.days = days
         requested_class.time = time
 
-        db.session.commit()
-        db.session.close()
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
         return class_schema.jsonify(requested_class)
 
@@ -214,8 +218,13 @@ class manipulate_user(Resource):
         new_user = User(username, password_hash, admin)
 
         db.session.add(new_user)
-        db.session.commit()
-        db.session.close()
+
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
         access_token = create_access_token(identity = username)
         refresh_token = create_refresh_token(identity = username)
@@ -253,9 +262,16 @@ class Teacher_Api(Resource):
         new_teacher = Teachers(first_name, last_name, department)
 
         db.session.add(new_teacher)
-        db.session.commit()
 
-        return make_response(teacher_schema.jsonify(new_teacher), 201)
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+        return "success"
+
 
 class manipulate_teacher(Resource):
     def put(self, id):
@@ -269,17 +285,26 @@ class manipulate_teacher(Resource):
         requested_teacher.last_name = last_name
         requested_teacher.department = department
 
-        db.session.commit()
-        db.session.close()
+        try: 
+            db.session.commit()
+        except:
+            return "error"
+        finally:
+            db.session.close()
 
-        return teacher_schema.jsonify(requested_teacher)
+        return "success"
 
     def delete(self, id):
         requested_teacher = Teachers.query.get(id)
         local_object = db.session.merge(requested_teacher)
         db.session.delete(local_object)
-        db.session.commit()
-        db.session.close()
+
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
         return teacher_schema.jsonify(requested_teacher)
 
@@ -301,8 +326,14 @@ class Classroom_Api(Resource):
         new_classroom = Classrooms(classroom_name, floor, building)
 
         db.session.add(new_classroom)
-        db.session.commit()
 
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+        
         return make_response(classroom_schema.jsonify(new_classroom), 201)
     
     def get(self):
@@ -322,19 +353,28 @@ class manipulate_classroom(Resource):
         requested_classroom.floor = floor
         requested_classroom.building = building
 
-        db.session.commit()
-        db.session.close()
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
-        return class_schema.jsonify(requested_classroom)
+        return "success"
     
     def delete(self, id):
         requested_classroom = Classrooms.query.get(id)
         local_object = db.session.merge(requested_classroom)
         db.session.delete(local_object)
-        db.session.commit()
-        db.session.close()
 
-        return classroom_schema.jsonify(requested_classroom)
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+        return "success"
 
 
 # routing method for RESTful Flask
