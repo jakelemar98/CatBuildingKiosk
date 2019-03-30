@@ -35,7 +35,11 @@
 
   <mat-dialog-content>
     <mat-form-field>
-      <input matInput formControlName="classroom" placeholder="Enter Classroom">
+      <mat-select formControlName="classroom" placeholder="Select Classroom">
+        <mat-option *ngFor="let classroom of classrooms" [value]="classroom.value">
+          {{classroom.value}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </mat-dialog-content>
 

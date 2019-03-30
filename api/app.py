@@ -124,11 +124,15 @@ class manipulate_class(Resource):
         new_class = Classes(class_id, class_name, teacher, section, classroom, days, time)
 
         db.session.add(new_class)
-        db.session.commit()
-
-        db.session.close()
-        return "success"
-        # return class_schema.jsonify(new_class)
+        
+        try:
+            db.session.commit()
+        except:
+            return "fuck"
+        finally:
+            db.session.close()
+        
+        return class_schema.jsonify(new_class)
 
 
     # update by ID
@@ -254,6 +258,22 @@ class Teacher_Api(Resource):
         return make_response(teacher_schema.jsonify(new_teacher), 201)
 
 class manipulate_teacher(Resource):
+    def put(self, id):
+        requested_teacher = Teachers.query.get(id)
+        
+        first_name = request.json['first_name']
+        last_name = request.json['last_name']
+        department = request.json['department']
+
+        requested_teacher.first_name = first_name
+        requested_teacher.last_name = last_name
+        requested_teacher.department = department
+
+        db.session.commit()
+        db.session.close()
+
+        return teacher_schema.jsonify(requested_teacher)
+
     def delete(self, id):
         requested_teacher = Teachers.query.get(id)
         local_object = db.session.merge(requested_teacher)
@@ -290,6 +310,33 @@ class Classroom_Api(Resource):
         result = classrooms_schema.dump(all_classrooms)
         return jsonify(result.data)
 
+class manipulate_classroom(Resource):
+    def put(self, id):
+        requested_classroom = Classrooms.query.get(id)
+
+        classroom_name = request.json['classroom_name']
+        floor = request.json['floor']
+        building = request.json['building']
+
+        requested_classroom.classroom_name = classroom_name
+        requested_classroom.floor = floor
+        requested_classroom.building = building
+
+        db.session.commit()
+        db.session.close()
+
+        return class_schema.jsonify(requested_classroom)
+    
+    def delete(self, id):
+        requested_classroom = Classrooms.query.get(id)
+        local_object = db.session.merge(requested_classroom)
+        db.session.delete(local_object)
+        db.session.commit()
+        db.session.close()
+
+        return classroom_schema.jsonify(requested_classroom)
+
+
 # routing method for RESTful Flask
 api.add_resource(Class_Api, '/classes')
 api.add_resource(manipulate_class, '/class','/class/<id>')
@@ -298,6 +345,7 @@ api.add_resource(manipulate_user, '/user/add','/user/<id>')
 api.add_resource(Teacher_Api, '/teachers')
 api.add_resource(manipulate_teacher, '/teacher/add','/teacher/<id>')
 api.add_resource(Classroom_Api, '/classrooms')
+api.add_resource(manipulate_classroom, '/classrooms/<id>')
 
 #start APP Loop
 if __name__ == '__main__':

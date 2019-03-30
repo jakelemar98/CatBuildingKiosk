@@ -22,7 +22,8 @@ import { AddTeacherComponent } from './add-teacher/add-teacher.component';
 import { TeacherTableComponent } from './teacher-table/teacher-table.component';
 import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
 import { AddClassroomComponent } from './add-classroom/add-classroom.component';
-import { EditClassroomComponent } from './edit-classroom/edit-classroom.component'
+import { EditClassroomComponent } from './edit-classroom/edit-classroom.component';
+import { ClassroomTableComponent } from './classroom-table/classroom-table.component'
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { EditClassroomComponent } from './edit-classroom/edit-classroom.componen
     TeacherTableComponent,
     EditTeacherComponent,
     AddClassroomComponent,
-    EditClassroomComponent
+    EditClassroomComponent,
+    ClassroomTableComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,8 @@ import { EditClassroomComponent } from './edit-classroom/edit-classroom.componen
                     EditTeacherComponent,
                     AddClassroomComponent,
                     AddClassroomComponent,
-                    EditClassroomComponent
+                    EditClassroomComponent,
+                    ClassroomTableComponent
                   ]
 
 })

@@ -54,7 +54,7 @@ export class EditTeacherComponent implements OnInit {
       return;
     }
     this.success = true;
-    this.DataService.updateClass(this.editTeacherForm.value, this.dataFill.id).subscribe( addedClass => {
+    this.DataService.updateTeacher(this.editTeacherForm.value, this.dataFill.id).subscribe( addedClass => {
       this.class = addedClass
       if(this.class){
         window.location.reload()

@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DataService } from '../data.service';
 
+export interface building {
+  value: string;
+}
+
 @Component({
   selector: 'app-add-classroom',
   templateUrl: './add-classroom.component.html',
@@ -11,6 +15,10 @@ export class AddClassroomComponent implements OnInit {
   
   addClassroomForm: FormGroup;
   classroom = Object;
+  buildings: building[] = [
+    {value: 'CAT Building'},
+    {value: 'Gardener Hall'}
+  ] 
 
   submitted = false;
   success = false;

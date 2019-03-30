@@ -22,9 +22,6 @@ export class ClassTableComponent implements OnInit {
     this.data.getClasses().subscribe(returnData => {
       this.dataSource = returnData
     });
-    this.data.getClasses().subscribe(returnData => {
-      this.dataSource = returnData
-    });
   }
 
   getClass(id){

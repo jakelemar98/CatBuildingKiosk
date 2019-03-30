@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { DataService } from '../data.service';
 
 export interface teacher {
-  value: string;
+  value: number;
   viewValue: string;
 }
 
@@ -12,6 +12,10 @@ export interface section {
 }
 
 export interface day {
+  value: string;
+}
+
+export interface classroom {
   value: string;
 }
 
@@ -27,6 +31,7 @@ export class AddClassComponent implements OnInit {
   success = false;
   class = Object;
   teachers: teacher[] = [];
+  classrooms: classroom[] = [];
   sections: section[] = [
                 {value: 'CIS'},
                 {value: 'CSC'},
@@ -74,6 +79,12 @@ export class AddClassComponent implements OnInit {
       for(let teach of returnedTeachers){
         var row = {value: teach.id, viewValue: teach.first_name + " " + teach.last_name}
         this.teachers.push(row)
+      };
+    });
+    this.data.getClassrooms().subscribe( returnedClassrooms => {
+      for(let classroom of returnedClassrooms){
+        var row = {value: classroom.classroom_name}
+        this.classrooms.push(row)
       };
     });
   }

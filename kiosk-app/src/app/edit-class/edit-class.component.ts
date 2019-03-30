@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { DataService } from '../data.service';
 
 export interface teacher {
-  value: string;
+  value: number;
   viewValue: string;
 }
 
@@ -13,6 +13,10 @@ export interface section {
 }
 
 export interface day {
+  value: string;
+}
+
+export interface classroom {
   value: string;
 }
 
@@ -29,6 +33,8 @@ export class EditClassComponent implements OnInit {
   submitted = false;
   success = false;
   teachers: teacher[] = [];
+  classrooms: classroom[] = [];
+
   sections: section[] = [
                 {value: 'CIS'},
                 {value: 'CSC'},
@@ -58,10 +64,11 @@ days: day[] = [
 
   ngOnInit() {
     this.dataFill = this.data.dataKey
+    
     var hour = this.dataFill.time.charAt(0)
     hour = parseInt(hour, 10)
     
-    if (hour < 10){
+    if (hour < 10 && hour != 0){
       this.dataFill.time = "0"+this.dataFill.time
     } 
     
@@ -80,7 +87,12 @@ days: day[] = [
         this.teachers.push(row)
       };
     });
-    console.log(this.teachers)
+    this.DataService.getClassrooms().subscribe( returnedClassrooms => {
+      for(let classroom of returnedClassrooms){
+        var row = {value: classroom.classroom_name}
+        this.classrooms.push(row)
+      };
+    });
   }
 
   onSubmit(){

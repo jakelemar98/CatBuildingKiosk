@@ -8,6 +8,8 @@ import { ClassTableComponent } from "../class-table/class-table.component";
 import { AddTeacherComponent } from "../add-teacher/add-teacher.component";
 import { TeacherTableComponent } from "../teacher-table/teacher-table.component";
 import { AddClassroomComponent } from "../add-classroom/add-classroom.component";
+import { ClassroomTableComponent } from "../classroom-table/classroom-table.component";
+
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +29,7 @@ export class AdminComponent implements OnInit {
 
   classTableDialogRef: MatDialogRef<ClassTableComponent>;
   teacherTableDialogRef: MatDialogRef<TeacherTableComponent>;
-
+  classroomTableDialogRef: MatDialogRef<ClassroomTableComponent>;
 
 
   constructor(private route: ActivatedRoute, private data: DataService, private router: Router, private dialog: MatDialog) { }
@@ -48,13 +50,17 @@ export class AdminComponent implements OnInit {
         height: '400px',
         width: '600px',
       });
-    } else{
+    } else if(type == "teacher"){
       this.teacherTableDialogRef = this.dialog.open(TeacherTableComponent,  {
         height: '400px',
         width: '600px',
       });
+    } else{
+      this.classroomTableDialogRef = this.dialog.open(ClassroomTableComponent,  {
+        height: '400px',
+        width: '600px',
+      });
     }
-
   }
 
 
