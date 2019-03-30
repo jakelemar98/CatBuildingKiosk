@@ -1,0 +1,39 @@
+<table mat-table  [dataSource]="dataSource" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="classroom_name">
+    <th mat-header-cell *matHeaderCellDef> Name </th>
+    <td mat-cell *matCellDef="let classroom"> {{ classroom.classroom_name }} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="floor">
+    <th mat-header-cell *matHeaderCellDef> Floor </th>
+    <td mat-cell *matCellDef="let classroom"> {{ classroom.floor }} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="building">
+    <th mat-header-cell *matHeaderCellDef> Building </th>
+    <td mat-cell *matCellDef="let classroom"> {{ classroom.building }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+   <th mat-header-cell *matHeaderCellDef> Actions </th>
+   <td mat-cell *matCellDef="let row; let i = index" >
+        <button mat-raised-button (click)="getClassroom(i)">Edit</button>
+        |
+        <button mat-raised-button
+         [swal]="{
+                   title: 'Delete Classroom', text:'Are you sure you want to delete this classroom?',
+                   type: 'warning', showCancelButton: true, confirmButtonText: 'Yes, delete it!'
+                 }"
+         (confirm)="deleteClassroom(row.id)"
+         >
+         delete
+       </button>
+   </td>
+</ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
