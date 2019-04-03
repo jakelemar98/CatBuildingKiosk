@@ -132,8 +132,7 @@ class manipulate_class(Resource):
         finally:
             db.session.close()
         
-        return class_schema.jsonify(new_class)
-
+        return "success"
 
     # update by ID
     def put(self, id):
@@ -162,18 +161,21 @@ class manipulate_class(Resource):
         finally:
             db.session.close()
 
-        return class_schema.jsonify(requested_class)
+        return "success"
 
     # delete by ID
     def delete(self, id):
         requested_class = Classes.query.get(id)
         local_object = db.session.merge(requested_class)
         db.session.delete(local_object)
-        db.session.commit()
-        db.session.close()
+        try: 
+            db.session.commit()
+        except:
+            db.session.rollback()
+        finally:
+            db.session.close()
 
-        return class_schema.jsonify(requested_class)
-
+        return "success"
 
 
 # Users Resources
@@ -334,8 +336,8 @@ class Classroom_Api(Resource):
         finally:
             db.session.close()
         
-        return make_response(classroom_schema.jsonify(new_classroom), 201)
-    
+        return "success"
+
     def get(self):
         all_classrooms = Classrooms.query.all()
         result = classrooms_schema.dump(all_classrooms)

@@ -1,8 +1,29 @@
-<h1>Classes</h1>
-<ul *ngIf="classes">
-  <li *ngFor="let class of classes">
-    <h2>{{ class.class_name }}</h2>
-    <br>
-    <p>{{ class.classroom }}</p>
-  </li>
-</ul>
+<div class="row">
+    <div class="col-md-4 col-md-border col-outside">
+      <h1 style="text-align:center">Classes</h1>
+        <ul *ngIf="classes">
+          <li *ngFor="let class of classes" (click)="onSelect(class, 'class')">
+            <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
+            <p>{{ class.class_name }}</p>
+          </li>
+        </ul>
+    </div>
+    <div class="col-md-4 col-md-border">
+        <h1 style="text-align:center">Teachers</h1>
+        <ul *ngIf="teachers">
+            <li *ngFor="let teacher of teachers" (click)="onSelect(teacher, 'teacher')">
+              <fa-icon [icon]="['fas', 'user-alt']"></fa-icon>
+              <p>{{ teacher.first_name + " " + teacher.last_name }}</p>
+            </li>
+          </ul>
+    </div>
+    <div class="col-md-4 col-md-border col-outside">
+        <h1 style="text-align:center">Classrooms</h1>
+        <ul *ngIf="classrooms">
+            <li *ngFor="let classroom of classrooms" (click)="onSelect(classroom, 'classroom')">
+              <fa-icon [icon]="['far', 'building']"></fa-icon>
+              <p>{{ classroom.classroom_name }}</p>
+            </li>
+          </ul>
+    </div>
+  </div>  

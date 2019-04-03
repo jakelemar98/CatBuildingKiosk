@@ -13,7 +13,12 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatDialogModule} from '@angular/material';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatChipsModule} from '@angular/material/chips';
 import { AddClassComponent } from './add-class/add-class.component';
 import { ClassTableComponent } from './class-table/class-table.component';
 import { MatTableModule } from '@angular/material';
@@ -24,7 +29,15 @@ import { EditTeacherComponent } from './edit-teacher/edit-teacher.component';
 import { AddClassroomComponent } from './add-classroom/add-classroom.component';
 import { EditClassroomComponent } from './edit-classroom/edit-classroom.component';
 import { ClassroomTableComponent } from './classroom-table/classroom-table.component'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { ViewClassComponent } from './view-class/view-class.component';
+import { ViewTeacherComponent } from './view-teacher/view-teacher.component';
+import { ViewClassroomComponent } from './view-classroom/view-classroom.component';
 
+library.add(fas, far);
 
 @NgModule({
   declarations: [
@@ -42,7 +55,10 @@ import { ClassroomTableComponent } from './classroom-table/classroom-table.compo
     EditTeacherComponent,
     AddClassroomComponent,
     EditClassroomComponent,
-    ClassroomTableComponent
+    ClassroomTableComponent,
+    ViewClassComponent,
+    ViewTeacherComponent,
+    ViewClassroomComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +74,13 @@ import { ClassroomTableComponent } from './classroom-table/classroom-table.compo
     MatDialogModule,
     MatTableModule,
     SweetAlert2Module.forRoot(),
-    MatSelectModule
+    MatSelectModule,
+    FontAwesomeModule,
+    MatIconModule,
+    MatListModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatDividerModule
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -72,7 +94,10 @@ import { ClassroomTableComponent } from './classroom-table/classroom-table.compo
                     AddClassroomComponent,
                     AddClassroomComponent,
                     EditClassroomComponent,
-                    ClassroomTableComponent
+                    ClassroomTableComponent,
+                    ViewClassComponent,
+                    ViewClassroomComponent,
+                    ViewTeacherComponent
                   ]
 
 })

@@ -42,6 +42,10 @@ export class DataService {
     return this.http.delete<Classes[]>("http://127.0.0.1:5001/class/"+id)
   }
 
+  getClass(id): Observable<Classes[]>{
+    return this.http.get<Classes[]>("http://127.0.0.1:5001/class/"+id)
+  }
+
   addTeacher(data): Observable<Teacher[]>{
     return this.http.post<Teacher[]>("http://127.0.0.1:5001/teachers", data)
   }

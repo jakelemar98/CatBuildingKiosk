@@ -1,0 +1,30 @@
+<h1 mat-dialog-title style="text-align: center">{{ class.class_name }}</h1>
+<mat-dialog-content class="mat-typography">
+
+  <h3 style="font-weight: bold">Course Call Number </h3>
+  <p><fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>  {{class.class_id}}</p>
+  <mat-divider></mat-divider>
+  <br>
+  <h3 style="font-weight: bold">Course Teacher </h3>
+  <p><fa-icon [icon]="['fas', 'user-alt']"></fa-icon>  Dr. {{class.teacher}}</p>
+  <mat-divider></mat-divider>
+  <br>
+  <h3 style="font-weight: bold">Classroom</h3>
+  <p><fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>  {{class.classroom}}</p>
+  <mat-divider></mat-divider>
+  <br>
+  <h3 style="font-weight: bold">Days</h3>
+  <mat-chip-list>
+      <mat-chip  *ngFor="let day of days" color="accent" selected>{{ day.value }}</mat-chip>
+  </mat-chip-list>
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  <h3 style="font-weight: bold">Time</h3>
+  <p><fa-icon [icon]="['far', 'clock']"></fa-icon>  {{class.time}}</p>
+  <mat-divider></mat-divider>
+  <br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
