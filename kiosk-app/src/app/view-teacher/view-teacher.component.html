@@ -1,3 +1,33 @@
-<p>
-  view-teacher works!
-</p>
+<h1 mat-dialog-title style="text-align: center">DR. {{ teacher.first_name + " " + teacher.last_name }}</h1>
+<mat-dialog-content class="mat-typography">
+
+  <h3 style="font-weight: bold">Department </h3>
+  <p><fa-icon [icon]="['fas', 'building']"></fa-icon>  {{teacher.department}}</p>
+  <mat-divider></mat-divider>
+  <br>
+
+  <h3 style="font-weight: bold">Classes They Teach </h3>
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <button mat-icon-button disabled></button>
+        {{node.name}}
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <button mat-icon-button matTreeNodeToggle
+                [attr.aria-label]="'toggle ' + node.name">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        {{node.name}}
+      </mat-tree-node>
+    </mat-tree>
+  <mat-divider></mat-divider>
+  <br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

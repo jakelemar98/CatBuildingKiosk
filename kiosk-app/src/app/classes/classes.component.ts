@@ -54,13 +54,15 @@ export class ClassesComponent implements OnInit {
       this.viewTeacherDialogRef = this.dialog.open(ViewTeacherComponent,  {
         data: {
             dataKey: obj
-        }
+        },
+        width: '700px'
       });
     } else{
       this.viewClassroomDialogRef = this.dialog.open(ViewClassroomComponent,  {
         data: {
             dataKey: obj
-        }
+        },
+        width: '700px'
       });
     }
   }

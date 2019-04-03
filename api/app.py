@@ -102,6 +102,11 @@ class Class_Api(Resource):
         result = classes_schema.dump(all_classes)
         return jsonify(result.data)
 
+    def post(self):
+        teacher = request.json['teacher']
+        all_classes = Classes.query.filter_by(teacher = teacher)
+        result = classes_schema.dump(all_classes)
+        return jsonify(result.data)
 
 # manipulate class endpoint that allows for a get post or update request
 class manipulate_class(Resource):

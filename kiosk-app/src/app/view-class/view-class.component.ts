@@ -8,7 +8,7 @@ export interface day {
 @Component({
   selector: 'app-view-class',
   templateUrl: './view-class.component.html',
-  styleUrls: ['./view-class.component.sass']
+  styleUrls: ['./view-class.component.scss']
 })
 export class ViewClassComponent implements OnInit {
 

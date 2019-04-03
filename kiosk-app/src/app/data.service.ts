@@ -46,6 +46,11 @@ export class DataService {
     return this.http.get<Classes[]>("http://127.0.0.1:5001/class/"+id)
   }
 
+  getClassesByTeacher(data): Observable<Classes[]>{
+    console.log(data)
+    return this.http.post<Classes[]>("http://127.0.0.1:5001/classes", data)
+  }
+
   addTeacher(data): Observable<Teacher[]>{
     return this.http.post<Teacher[]>("http://127.0.0.1:5001/teachers", data)
   }

@@ -19,6 +19,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatTreeModule} from '@angular/material/tree';
 import { AddClassComponent } from './add-class/add-class.component';
 import { ClassTableComponent } from './class-table/class-table.component';
 import { MatTableModule } from '@angular/material';
@@ -80,7 +81,8 @@ library.add(fas, far);
     MatListModule,
     MatChipsModule,
     MatGridListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTreeModule
   ],
   providers: [],
   bootstrap: [AppComponent],
