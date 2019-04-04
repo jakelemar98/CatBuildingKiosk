@@ -44,7 +44,7 @@ export class ViewTeacherComponent implements OnInit {
       this.transformer, node => node.level, node => node.expandable, node => node.children);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
+  
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService) {
    }
@@ -100,10 +100,10 @@ export class ViewTeacherComponent implements OnInit {
       this.TREE_DATA.push(row)
     }
     this.dataSource.data = this.TREE_DATA;
+    console.log(this.dataSource.data.length);
 
   });
 
   }
-  hasChild = (_: number, node: FlatNode) => node.expandable;
-
+  hasChild = (_: number, node: FlatNode) => node.expandable
 }

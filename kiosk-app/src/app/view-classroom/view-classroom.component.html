@@ -1,3 +1,54 @@
-<p>
-  view-classroom works!
-</p>
+<h1 mat-dialog-title style="text-align: center">{{ classroom.classroom_name }}</h1>
+<mat-dialog-content class="mat-typography">
+
+<h3 style="font-weight: bold">Building</h3>
+<p><fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>  {{classroom.building}} </p>
+<mat-divider></mat-divider>
+<br>
+
+<h3 style="font-weight: bold">Floor</h3>
+<p><fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>  {{classroom.floor}} </p>
+<mat-divider></mat-divider>
+<br>
+
+<h3 style="font-weight: bold">Classroom Schedule</h3>
+<mat-tab-group>
+    <mat-tab label="Monday">  
+      <br>
+      <mat-chip-list>
+        <mat-chip matTooltip="{{ class.classname }}" *ngFor="let class of monday" color="accent" [selectable]="selectable" (click)="goToClass(class.class_id)" selected>{{ class.classtime }} </mat-chip>
+      </mat-chip-list>
+      <br>
+      <mat-divider></mat-divider>
+      <br>        
+    </mat-tab>
+    <mat-tab label="Tuesday">
+      <br>
+      <mat-chip-list>
+        <mat-chip matTooltip="{{ class.classname }}" *ngFor="let class of tuesday" color="accent" [selectable]="selectable" (click)="goToClass(class.class_id)"  selected>{{ class.classtime }} </mat-chip>
+      </mat-chip-list>
+      <br>
+    </mat-tab>
+    <mat-tab label="Wednesday">
+      <br>
+      <mat-chip-list>
+        <mat-chip matTooltip="{{ class.classname }}" *ngFor="let class of wednesday" color="accent" [selectable]="selectable" (click)="goToClass(id)"  selected>{{ class.classtime }} </mat-chip>
+      </mat-chip-list>  
+      <br>
+    </mat-tab>
+    <mat-tab label="Thursday">
+      <br>
+      <mat-chip-list>
+        <mat-chip matTooltip="{{ class.classname }}" *ngFor="let class of thursday" color="accent" [selectable]="selectable" (click)="goToClass(class.class_id)"  selected>{{ class.classtime }} </mat-chip>
+      </mat-chip-list>  
+      <br>
+    </mat-tab>
+    <mat-tab label="Friday">
+      <br>
+      <mat-chip-list>
+        <mat-chip matTooltip="{{ class.classname }}" *ngFor="let class of friday" color="accent" [selectable]="selectable" (click)="goToClass(class.class_id)"  selected>{{ class.classtime }} </mat-chip>
+      </mat-chip-list>  
+      <br>
+    </mat-tab>
+  </mat-tab-group>
+<br>

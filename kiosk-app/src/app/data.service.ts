@@ -47,8 +47,11 @@ export class DataService {
   }
 
   getClassesByTeacher(data): Observable<Classes[]>{
-    console.log(data)
     return this.http.post<Classes[]>("http://127.0.0.1:5001/classes", data)
+  }
+
+  getClassesByClassroom(data): Observable<Classes[]>{
+    return this.http.post<Classes[]>("http://127.0.0.1:5001/classes/classroom", data)
   }
 
   addTeacher(data): Observable<Teacher[]>{
@@ -67,6 +70,10 @@ export class DataService {
     return this.http.delete<Teacher[]>("http://127.0.0.1:5001/teacher/"+id)
   }
 
+  getTeacher(name):Observable<Teacher[]>{
+    return this.http.get<Teacher[]>("http://127.0.0.1:5001/teacher/"+name)
+  }
+
   addClassroom(data): Observable<Classroom[]>{
     return this.http.post<Classroom[]>("http://127.0.0.1:5001/classrooms", data)
   }
@@ -81,5 +88,11 @@ export class DataService {
 
   deleteClassroom(id): Observable<Classroom[]>{
     return this.http.delete<Classroom[]>("http://127.0.0.1:5001/classrooms/"+id)
+  }
+
+  getClassroom(data): Observable<Classroom[]>{
+    console.log(data);
+    
+    return this.http.post<Classroom[]>("http://127.0.0.1:5001/classrooms/classroom", data)
   }
 }

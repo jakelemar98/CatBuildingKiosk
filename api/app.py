@@ -108,6 +108,15 @@ class Class_Api(Resource):
         result = classes_schema.dump(all_classes)
         return jsonify(result.data)
 
+
+class fetch_class(Resource):
+    def post(self):
+        classroom = request.json['classroom']
+        all_classes = Classes.query.filter_by(classroom = classroom)
+        result = classes_schema.dump(all_classes)
+        return jsonify(result.data)
+
+
 # manipulate class endpoint that allows for a get post or update request
 class manipulate_class(Resource):
     # get by id
@@ -281,6 +290,12 @@ class Teacher_Api(Resource):
 
 
 class manipulate_teacher(Resource):
+    def get(self, id):
+        requested_teacher = Teachers.query.filter_by(last_name = id)
+
+        result = teachers_schema.dump(requested_teacher)
+        return jsonify(result.data)
+
     def put(self, id):
         requested_teacher = Teachers.query.get(id)
         
@@ -383,16 +398,25 @@ class manipulate_classroom(Resource):
 
         return "success"
 
+class fetch_classroom(Resource):
+    def post(self):
+        classroom_name = request.json['classroom_name']
+        requested_classroom = Classrooms.query.filter_by(classroom_name = classroom_name)
+        result = classrooms_schema.dump(requested_classroom)
+        return jsonify(result.data)
+
 
 # routing method for RESTful Flask
 api.add_resource(Class_Api, '/classes')
 api.add_resource(manipulate_class, '/class','/class/<id>')
+api.add_resource(fetch_class, '/classes/classroom')
 api.add_resource(User_Api, '/users')
 api.add_resource(manipulate_user, '/user/add','/user/<id>')
 api.add_resource(Teacher_Api, '/teachers')
 api.add_resource(manipulate_teacher, '/teacher/add','/teacher/<id>')
 api.add_resource(Classroom_Api, '/classrooms')
 api.add_resource(manipulate_classroom, '/classrooms/<id>')
+api.add_resource(fetch_classroom, '/classrooms/classroom')
 
 #start APP Loop
 if __name__ == '__main__':

@@ -6,11 +6,17 @@
   <mat-divider></mat-divider>
   <br>
   <h3 style="font-weight: bold">Course Teacher </h3>
-  <p><fa-icon [icon]="['fas', 'user-alt']"></fa-icon>  Dr. {{class.teacher}}</p>
+  <mat-chip-list>
+      <mat-chip color="accent" selected [selectable]="selectable" (click)="goToTeacher(class.teacher)"> Dr. {{class.teacher}}</mat-chip>
+  </mat-chip-list>
+  <br>
   <mat-divider></mat-divider>
   <br>
   <h3 style="font-weight: bold">Classroom</h3>
-  <p><fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>  {{class.classroom}}</p>
+  <mat-chip-list>
+      <mat-chip color="accent" selected [selectable]="selectable" (click)="goToClassroom(class.classroom)">{{ class.classroom }}</mat-chip>
+  </mat-chip-list>
+  <br>
   <mat-divider></mat-divider>
   <br>
   <h3 style="font-weight: bold">Days</h3>

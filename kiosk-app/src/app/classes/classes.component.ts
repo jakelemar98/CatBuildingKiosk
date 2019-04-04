@@ -28,21 +28,16 @@ export class ClassesComponent implements OnInit {
   ngOnInit() {
     this.data.getClasses().subscribe(data => {
       this.classes = data
-      console.log(this.classes);
     });
     this.data.getTeachers().subscribe(data => {
       this.teachers = data
-      console.log(this.teachers);
     });
     this.data.getClassrooms().subscribe(data => {
       this.classrooms = data
-      console.log(this.classrooms);
     });
   };
 
   onSelect(obj, type) {
-    console.log(obj, type)
-    var id = obj.id;
     if  (type == "class"){
       this.viewClassDialogRef = this.dialog.open(ViewClassComponent,  {
         data: {
